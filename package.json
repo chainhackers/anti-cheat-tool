@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clear": "rm -rf node_modules yarn.lock",
+    "reinstall": "yarn clear && yarn install"
   },
   "dependencies": {
     "@types/node": "18.11.9",
