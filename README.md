@@ -1,1 +1,1 @@
-# Anticheat Tool by Gamerjutsu
+# Anticheat Tool by Gamejutsu
