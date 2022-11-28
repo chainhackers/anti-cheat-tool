@@ -7,7 +7,11 @@
   align-items: center;
   justify-content: space-between;
 
-  .connect {
-    margin-left: auto;
+  @media only screen and (max-width: 90em) {
+    padding: 0 4em;
+  }
+
+  .logo {
+    margin-right: auto;
   }
 }

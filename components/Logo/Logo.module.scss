@@ -1,0 +1,14 @@
+.container {
+  .link {
+    &:link,
+    &:visited {
+      transition: all 0.5s;
+      display: inline-block;
+    }
+
+    &:hover,
+    &:active {
+      transform: scale(1.1);
+    }
+  }
+}
