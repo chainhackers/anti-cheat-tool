@@ -26,6 +26,9 @@
         "l2": "Launch your awesome game on Web3 with us."
       }
     },
+    "page404": {
+      "message": "Page could not be found"
+    },
     "gameTypePage": {
       "title": "Choose a game demo",
       "description": "Experience the protocol yourself. It just works. ✨",

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { Button, PoweredBy } from 'components';
-import styles from '../styles/Home.module.scss';
+import styles from 'styles/Home.module.scss';
 
 import companies from 'data/partners.json';
 
@@ -15,13 +15,13 @@ const Home: NextPage<IHomePageProps> = ({ partners }) => {
   const { t } = useTranslation();
   const router = useRouter();
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Anti-cheat tool by ChainHackers Gamejutsu</title>
         <meta name="description" content="Anti-cheat tool by Gamejutsu ChainHackers" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <div className={styles.container}>
         <h1 className={styles.h1}>
           {t('frontpage.introduction.l1')}
           <br></br>
@@ -53,8 +53,8 @@ const Home: NextPage<IHomePageProps> = ({ partners }) => {
         <div className={styles.proweredby}>
           <PoweredBy poweredByList={partners} />
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 
