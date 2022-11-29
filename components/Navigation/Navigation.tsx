@@ -1,23 +1,21 @@
 import Link from 'next/link';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { INavigationProps } from './NavigationProps';
 import styles from './Navigation.module.scss';
-import { useState } from 'react';
 export const Navigation: React.FC<INavigationProps> = () => {
-  const [isShowMenu, setIsShowMenu] = useState<boolean>(true);
-  const t = (param: string) => {
-    const map: { [id: string]: string } = {
-      'navigation.gameDemo': 'game demo',
-      'navigation.documents': 'documents',
-      'navigation.team': 'meet the team',
-    };
-    return map[param];
-  };
+  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+
+  const { t } = useTranslation();
   return (
     <div className={styles.container}>
       {isShowMenu && (
         <div className={styles.navigation__menu}>
-          <div className={styles.navigation__close_button} onClick={() => setIsShowMenu(false)}>
+          <div
+            className={styles.navigation__close_button}
+            onClick={() => setIsShowMenu(false)}
+          >
             <svg className={styles.navigation__icon}>
               <use xlinkHref="logos/sprite.svg#icon-close"></use>
             </svg>
