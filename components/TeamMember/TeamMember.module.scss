@@ -1,0 +1,62 @@
+.container {
+    position: relative;
+    display: flex;
+    width: 850px;
+    margin: auto;
+
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 0;
+
+    .avatar {
+        width: 155px;
+        height: 155px;
+
+        background: #0c0f1e;
+        border-radius: 10px;
+        margin: auto 50px auto 0;
+
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .information {
+        text-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .header {
+            display: flex;
+            .name {
+                position: relative;
+                padding-right: 10px;
+                font-weight: 700;
+                font-size: 26px;
+                // width: 275px;
+            }
+            .contacts {
+                display: inline-block;
+                .contactsElement {
+                    display: inline-block;
+                    padding-right: 10px;
+                }
+            }
+        }
+
+        .role {
+            padding-top: 5px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .description {
+            padding-top: 5px;
+            font-weight: 350;
+            font-size: 14px;
+        }
+        .link {
+            padding-top: 5px;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+}
