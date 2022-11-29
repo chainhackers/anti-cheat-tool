@@ -5,3 +5,4 @@ export * from './Layout';
 export * from './Navigation';
 export * from './Logo';
 export * from './PoweredBy';
+export * from './GameThumbnail';

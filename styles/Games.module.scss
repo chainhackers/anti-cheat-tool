@@ -1,0 +1,31 @@
+$color-dark-grey: #212529;
+.container {
+  padding: 0 2rem;
+  position: relative;
+  max-width: 1250px;
+  padding: 1rem 5px;
+  margin: auto;
+  text-align: center;
+  color: $color-dark-grey;
+}
+.h1 {
+  font-size: 5rem;
+  font-weight: bold;
+  padding-top: 5rem;
+  line-height: 7.5rem;
+}
+
+.description {
+  padding-top: 3rem;
+  font-size: 26px;
+  // max-width: 650px;
+  line-height: 4rem;
+  font-weight: 400;
+}
+
+.gamelist {
+  display: flex;
+  justify-content: center;
+
+  padding: 20px;
+}
