@@ -4,85 +4,60 @@
 }
 
 .main {
-  padding: 4rem 2rem;
-  flex: 1;
+
+  max-width: 1250px;
+  padding: 1rem 5px;
+  margin: auto;
+
+  display: grid;
+  justify-content: space-between;
+
+  grid-template-columns: 62rem min-content;
+  grid-template-rows: max-content max-content max-content max-content;
+}
+
+.h1 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+
+  font-size: 5rem;
+  font-weight: bold;
+  padding-top: 5rem;
+  line-height: 7.5rem;
+}
+
+.description {
+  grid-column: 1 /1;
+  grid-row: 3 / 6;
+  padding-top: 3rem;
+  font-size: 26px;
+  max-width: 650px;
+  line-height: 4rem;
+  font-weight: 400;
+
+  span {
+    display: inline-block;
+  }
+  span:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+}
+
+.tryButton {
+  grid-column: 1 / 1;
+  grid-row: 6 / 7;
+}
+
+.logo {
+  grid-column: 2/ 2;
+  grid-row: 1 / 4;
+  width: 500px;
+  height: 330px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    font-size: 4rem;
-  }
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  p {
-    font-size: 2rem;
-    padding: 1rem;
-  }
+  justify-content: flex-end;
 }
 
-.message {
-  width: 600px;
-}
-
-.form {
-  input {
-    width: 100%;
-    height: 4rem;
-    display: block;
-    margin-bottom: 1rem;
-    padding: 1rem 2rem;
-    font-size: 2rem;
-  }
-
-  button {
-    width: 100%;
-    height: 4rem;
-    display: block;
-    font-size: 2rem;
-    border: none;
-  }
-}
-
-.signedInformtaion {
-  width: 600px;
-
-  input {
-    width: 100%;
-    height: 4rem;
-    display: block;
-    margin-bottom: 1rem;
-    padding: 1rem 2rem;
-    font-size: 2rem;
-  }
-
-  button {
-    width: 100%;
-    height: 4rem;
-    display: block;
-    font-size: 2rem;
-    border: none;
-  }
-
-  .signature {
-    line-break: anywhere;
-  }
-}
-
-.error {
-  position: absolute;
-  color: red;
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  p {
-    font-size: 2rem;
-    padding: 1rem;
-  }
+.proweredby {
+  padding-top: 3rem;
+  grid-row: 4 / 7;
 }

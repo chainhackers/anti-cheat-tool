@@ -1,4 +1,8 @@
 .container {
+  width: 77px;
+  height: 77px;
+  border-radius: 10px;
+  overflow: hidden;
   .link {
     &:link,
     &:visited {

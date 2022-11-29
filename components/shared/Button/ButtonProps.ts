@@ -3,4 +3,6 @@ export interface IButtonProps {
   value?: string;
   onClick?: () => void | Promise<void>;
   type?: 'button' | 'submit';
+  width?: 'w200';
+  color?: 'black';
 }

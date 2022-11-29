@@ -9,25 +9,47 @@ $color-dark-grey: #212529;
     background-color: #fff;
     padding: 1rem 2rem;
     border: 2px solid currentColor;
-    border-radius: 10px;
+    border-radius: 100px;
     color: $color-dark-grey;
     font-family: 'Inter', sans-serif;
     font-size: 1.6rem;
     font-weight: 600;
-    text-transform: uppercase;
+    text-transform: capitalize;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
-  }
+    transition: box-shadow 0.2s;
+    transition: top 0.2s;
 
-  .button:hover {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    border-bottom: 3px solid currentColor;
-    top: -1px;
-  }
+    &:hover {
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+      border-bottom: 3px solid currentColor;
+      top: -1px;
+    }
 
-  .button:active {
-    top: 1px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    border-bottom: 2px solid currentColor;
+    &:active {
+      top: 1px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+      border-bottom: 2px solid currentColor;
+    }
+
+    &.black {
+      background-color: $color-dark-grey;
+      border-color: $color-dark-grey;
+      color: #fff;
+
+      &:hover {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+        border-bottom-color: $color-dark-grey;
+        
+      }
+      &:active {
+
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        border-bottom: 2px solid $color-dark-grey;
+      }
+    }
   }
+}
+
+.w200 {
+  width: 200px;
 }
