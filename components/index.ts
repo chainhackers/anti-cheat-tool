@@ -6,3 +6,4 @@ export * from './Navigation';
 export * from './Logo';
 export * from './PoweredBy';
 export * from './GameThumbnail';
+export * from './TeamMember';
