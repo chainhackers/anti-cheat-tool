@@ -17,7 +17,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
             onClick={() => setIsShowMenu(false)}
           >
             <svg className={styles.navigation__icon}>
-              <use xlinkHref="logos/sprite.svg#icon-close"></use>
+              <use xlinkHref="/logos/sprite.svg#icon-close"></use>
             </svg>
           </div>
           <ul className={styles.navigation__list_sm}>
@@ -49,7 +49,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
                 className={styles.navigation__link}
               >
                 <svg className={styles.navigation__icon}>
-                  <use xlinkHref="logos/sprite.svg#icon-discord"></use>
+                  <use xlinkHref="/logos/sprite.svg#icon-discord"></use>
                 </svg>
               </Link>
             </li>
@@ -61,7 +61,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
                 className={styles.navigation__link}
               >
                 <svg className={styles.navigation__icon}>
-                  <use xlinkHref="logos/sprite.svg#icon-github"></use>
+                  <use xlinkHref="/logos/sprite.svg#icon-github"></use>
                 </svg>
               </Link>
             </li>
@@ -71,7 +71,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
       <nav className={styles.navigation}>
         <div className={styles.navigation__menu_button} onClick={() => setIsShowMenu(true)}>
           <svg className={styles.navigation__icon}>
-            <use xlinkHref="logos/sprite.svg#icon-menu-bars"></use>
+            <use xlinkHref="/logos/sprite.svg#icon-menu-bars"></use>
           </svg>
         </div>
 
@@ -104,7 +104,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
               className={styles.navigation__link}
             >
               <svg className={styles.navigation__icon}>
-                <use xlinkHref="logos/sprite.svg#icon-discord"></use>
+                <use xlinkHref="/logos/sprite.svg#icon-discord"></use>
               </svg>
             </Link>
           </li>
@@ -116,7 +116,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
               className={styles.navigation__link}
             >
               <svg className={styles.navigation__icon}>
-                <use xlinkHref="logos/sprite.svg#icon-github"></use>
+                <use xlinkHref="/logos/sprite.svg#icon-github"></use>
               </svg>
             </Link>
           </li>

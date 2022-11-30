@@ -27,9 +27,7 @@ const GamesPage: NextPage<IGamesPageProps> = ({ games }) => {
                 key={game.name + index}
                 {...game}
                 name={t(`gameTypePage.games.${game.name}`)}
-                url={
-                  userAddress ? `/games/${game.url}?select=true` : `/connect?game=${game.url}`
-                }
+                url={`/games/${game.url}/SelectGameMode`}
               />
             );
           })}

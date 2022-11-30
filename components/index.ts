@@ -7,3 +7,4 @@ export * from './Logo';
 export * from './PoweredBy';
 export * from './GameThumbnail';
 export * from './TeamMember';
+export * from './ConnectWalletModal';
