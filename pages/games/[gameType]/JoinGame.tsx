@@ -11,7 +11,7 @@ const JoinGame = () => {
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const { value } = event.currentTarget.gameid;
-    //TODO: add gameId handler
+    //TO: add gameId handler
     console.log(router.query);
     const { gameType } = router.query as { gameType: string };
     router.push(`/games/${gameType}?gameid=${value}`);
