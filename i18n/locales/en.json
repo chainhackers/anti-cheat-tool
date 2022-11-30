@@ -54,9 +54,11 @@
     },
     "joinGame": {
       "title": "Join a game",
-      "description": "Select from one of the sessions to join",
+      "description": "Enter a game Id to join",
+      "choseFromlist": "...or choose a session from the list below:",
       "accepting": "Accepting game...",
-      "error": "Accepting game failed. Please try again"
+      "error": "Accepting game failed. Please try again",
+      "gameid": "Game Id"
     },
     "gamesList": {
       "header": {
