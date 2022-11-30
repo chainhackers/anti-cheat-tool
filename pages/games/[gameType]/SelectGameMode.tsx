@@ -24,7 +24,7 @@ const SelectGameModePage = () => {
         <div className={styles.new}>
           <div className={styles.title}>{t('selectGame.new.title')}</div>
           <div className={styles.description}>{t('selectGame.new.description')}</div>
-          <Link href={'/games/' + query.gameType + '/NewGame'}>
+          <Link href={'/games/' + query.gameType + '/'}>
             <div className={styles.button}>
               <span>{t('selectGame.new.button')}</span>
             </div>
