@@ -46,8 +46,36 @@ $color-dark-grey: #212529;
       }
     }
   }
+
+  .red {
+    background-color: red;
+    color: #fff;
+  }
+
+  .borderless {
+    border: none;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    background-color: var(--gray-darker);
+
+    &:hover {
+      top: 0;
+      box-shadow: none;
+    }
+  }
+
+  .sm {
+    font-size: 1.2rem;
+    height: 3.5rem;
+  }
 }
 
 .w200 {
   width: 200px;
+}
+
+.w100p {
+  width: 100%;
 }

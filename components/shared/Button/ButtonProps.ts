@@ -3,6 +3,9 @@ export interface IButtonProps {
   value?: string;
   onClick?: () => void | Promise<void>;
   type?: 'button' | 'submit';
-  width?: 'w200';
-  color?: 'black';
+  width?: 'w200' | 'w100p';
+  color?: 'black' | 'red';
+  size?: 'sm';
+  borderless?: boolean;
+  disabled?: boolean;
 }

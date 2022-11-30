@@ -14,7 +14,7 @@ const JoinGame = () => {
     //TODO: add gameId handler
     console.log(router.query);
     const { gameType } = router.query as { gameType: string };
-    router.push(`/games/${gameType}?gameid=${value}`);
+    router.push(`/games/${gameType}?game=${value}`);
   };
   return (
     <div className={styles.container}>

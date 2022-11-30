@@ -7,16 +7,30 @@ export const Button: React.FC<IButtonProps> = ({
   type = 'button',
   width = 'unset',
   color = 'default_color',
+  disabled,
+  size = 'default',
+  borderless,
 }) => {
   const clickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     onClick();
   };
+
+  console.log('color', color);
   return (
     <div className={styles.container}>
       <button
         type={type}
-        className={cn(styles.button, styles[width], styles[color], styles.capitalise)}
+        className={cn(
+          styles.button,
+          styles[width],
+          styles[color],
+          styles[borderless ? 'borderless' : 'default'],
+          styles[size],
+          styles[disabled ? 'disabled' : 'default'],
+          styles.capitalise,
+        )}
         onClick={clickHandler}
+        // disabled={disabled}
       >
         {value}
       </button>
