@@ -7,7 +7,7 @@ export const LeftPanel: React.FC<LeftPanelPropsI> = ({
   onRunDisput,
   ...props
 }) => {
-  console.log(players);
+  // console.log(players);
   return (
     <div className={styles.container}>
       <Players player1={players[0]} player2={players[1]} {...props} />

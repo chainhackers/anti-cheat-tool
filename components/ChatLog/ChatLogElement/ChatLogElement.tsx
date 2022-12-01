@@ -1,10 +1,10 @@
 import { IChatLogElementProps } from './ChatLogElementProps';
 import styles from './ChatLogElement.module.scss';
-import { IAnyMessage, ISignedGameMove } from 'types';
+import { IAnyMessage, IChatLogMessage, ISignedGameMove } from 'types';
 import { TicTacToeBoard, TIC_TAC_TOE_MOVE_TYPES } from 'components/Games/Tic-Tac-Toe/types';
 import { defaultAbiCoder } from 'ethers/lib/utils';
 
-function formatGameMove(anyMessage: IAnyMessage): {
+function formatGameMove(anyMessage: IChatLogMessage): {
   oldState: string;
   newState: string;
   move: string;
@@ -12,8 +12,7 @@ function formatGameMove(anyMessage: IAnyMessage): {
   nonce: string;
   gameId: string;
 } | null {
-  let signedGameMove =
-    anyMessage.messageType == 'ISignedGameMove' && (anyMessage.message as ISignedGameMove);
+  let signedGameMove = anyMessage.messageType == 'ISignedGameMove' && anyMessage.signedMove;
   if (!signedGameMove) {
     return null;
   }
@@ -37,20 +36,16 @@ export const ChatLogElement: React.FC<IChatLogElementProps> = ({ anyMessage }) =
   return (
     <div className={styles.container}>
       <div className={styles.row}>
-        <div className={styles.title}>Id:</div>
-        <div className={styles.data}>{anyMessage.underlyingMessage.id}</div>
-      </div>
-      <div className={styles.row}>
         <div className={styles.title}>Sender:</div>
-        <div className={styles.data}>{anyMessage.underlyingMessage.senderAddress}</div>
+        <div className={styles.data}>{anyMessage.senderAddress}</div>
       </div>
       <div className={styles.row}>
         <div className={styles.title}>Recipient:</div>
-        <div className={styles.data}>{anyMessage.underlyingMessage.recipientAddress}</div>
+        <div className={styles.data}>{anyMessage.recipientAddress}</div>
       </div>
       <div className={styles.row}>
         <div className={styles.title}>Date:</div>
-        <div className={styles.data}>{new Date(anyMessage.underlyingMessage.sent).toISOString()}</div>
+        <div className={styles.data}>{anyMessage.sent && new Date(anyMessage.sent).toISOString()}</div>
       </div>
       <div className={styles.row}>
         <div className={styles.title}>Game Id:</div>

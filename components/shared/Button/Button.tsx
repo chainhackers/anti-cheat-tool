@@ -15,7 +15,6 @@ export const Button: React.FC<IButtonProps> = ({
     onClick();
   };
 
-  console.log('color', color);
   return (
     <div className={styles.container}>
       <button

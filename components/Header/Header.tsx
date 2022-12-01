@@ -1,4 +1,5 @@
 import { WalletConnector, Navigation, Logo } from 'components';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { IHeaderProps } from './HeaderProps';
 import styles from './Header.module.scss';
 export const Header: React.FC<IHeaderProps> = () => {
@@ -12,6 +13,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       </div>
       <div className={styles.connect}>
         <WalletConnector />
+        <ConnectButton />
       </div>
     </div>
   );

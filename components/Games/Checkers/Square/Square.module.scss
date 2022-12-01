@@ -1,0 +1,129 @@
+.square {
+  position: relative;
+  background-color: transparent;
+  float: left;
+  font-size: 40px;
+  height: 100%;
+  padding: 0;
+  text-align: center;
+  width: 12.5%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &.disputable {
+    background-color: red;
+  }
+
+  &.red {
+    background-size: 50%;
+    background-image: url('/images/piece.red.svg');
+  }
+
+  &.white {
+    background-size: 50%;
+    background-image: url('/images/piece.white.svg');
+  }
+
+  &.redQueen {
+    background-size: 50%;
+    background-image: url('/images/queen.red.svg');
+  }
+  &.whiteQueen {
+    background-size: 50%;
+    background-image: url('/images/queen.white.svg');
+  }
+  &.redQueen.selected {
+    background-image: url('/images/queen.red.svg'), url('/images/selection.svg');
+    background-size: 50%, 75%;
+  }
+  &.whiteQueen.selected {
+    background-image: url('/images/queen.white.svg'), url('/images/selection.svg');
+    background-size: 50%, 75%;
+  }
+
+  &.selected {
+    background-image: url('/images/selection.svg');
+    background-size: 75%;
+  }
+
+  &.red.selected {
+    background-image: url('/images/piece.red.svg'), url('/images/selection.svg');
+    background-size: 50%, 75%;
+  }
+  &.white.selected {
+    background-image: url('/images/piece.white.svg'), url('/images/selection.svg');
+    background-size: 50%, 75%;
+  }
+}
+.square:focus {
+  outline: none;
+}
+
+.controls {
+  position: absolute;
+  font-size: 10px;
+  width: 200%;
+  height: 200%;
+  transform: translate(-25%, -17%);
+  z-index: 3000;
+
+  display: grid;
+  grid-template-rows: 40% 40%;
+  grid-template-columns: 1fr;
+  justify-content: space-between;
+  align-content: space-between;
+
+  &.flip {
+    transform: rotate(180deg);
+    transform: rotate(180deg) translate(25%, 33%);
+  }
+
+  .row {
+    justify-self: stretch;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+
+  .button {
+    position: relative;
+    z-index: 2000;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    box-shadow: 0 0 5px rgba(0,0,0,0.8);
+    flex: 0 0 40%;
+    
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-left: auto;
+    }
+
+    &.undo {
+      color: red;
+    }
+
+    &.confirm {
+      color: green;
+    }
+
+    &.jump {
+      color: blue;
+      transform: rotate(12deg);
+      
+    }
+
+    svg {
+      width: 85%;
+      height: 85%;
+      stroke: currentColor;
+      
+    }
+  }
+}

@@ -12,6 +12,8 @@ import {
   getDoc,
   getCountFromServer,
   updateDoc,
+  documentId,
+  arrayUnion,
 } from 'firebase/firestore';
 const firebaseConfig = {
   apiKey: 'AIzaSyDlLdZslY2GlNxb7hdE-u9vC9yfTJOBHQ4',
@@ -49,6 +51,8 @@ export const addDataWithCustomId = async (
   data: { [fieldName: string]: any },
   documentId: string,
 ) => {
+  console.log(collectionName, documentId, data);
+
   try {
     await setDoc(doc(database, collectionName, documentId), data);
     return {
@@ -125,4 +129,20 @@ export const updateDocumentData = async (
 ) => {
   const docRef = doc(database, collectionName, documentId);
   await updateDoc(docRef, data);
+};
+
+export const updateDocumentArrayDataByField = async (
+  database: Firestore,
+  collectionName: string,
+  data: { [fieldName: string]: any },
+  documentId: string,
+  fieldName: string,
+) => {
+  const docRef = doc(database, collectionName, documentId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    await updateDoc(docRef, { [fieldName]: arrayUnion(data) });
+    return data;
+  }
+  addDataWithCustomId(database, collectionName, { [fieldName]: [data] }, documentId);
 };

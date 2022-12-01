@@ -1,6 +1,7 @@
-import { IAnyMessage } from 'types';
+import { IAnyMessage, IChatLogMessage } from 'types';
+
 
 export interface IChatLogElementProps {
-  anyMessage: IAnyMessage;
+  anyMessage: IChatLogMessage;
   children?: React.ReactNode;
 }

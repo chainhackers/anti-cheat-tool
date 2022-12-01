@@ -14,3 +14,4 @@ export * from './Players';
 export * from './Player';
 export * from './RightPanel';
 export * from './ChatLog';
+export * from './XMTPChatLog';
