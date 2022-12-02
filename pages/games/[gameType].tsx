@@ -416,19 +416,24 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
         isValid,
         isOpponentMove,
       );
-      console.log('nextGameState', nextGameState);
+      // console.log('nextGameState', nextGameState);
       setGameState(nextGameState);
       setIsInvalidMove(!isValid);
-      console.log(
-        'nextGameState.getWinnerId() !== null',
-        nextGameState.getWinnerId() !== null,
-      );
+      // console.log(
+      //   'nextGameState.getWinnerId() !== null',
+      //   nextGameState.getWinnerId() !== null,
+      // );
       if (nextGameState.getWinnerId() !== null) {
         setFinishGameCheckResult({ winner: playerIngameId === nextGameState.getWinnerId() });
         if (playerIngameId === nextGameState.getWinnerId()) {
-          console.log('nextGameState', nextGameState);
+          // console.log('nextGameState', nextGameState);
           runFinishGameHandler(nextGameState);
         }
+      }
+      if (nextGameState.nonce >= 9 && nextGameState.getWinnerId() === null) {
+        console.log('draw state, nonce:', nextGameState.nonce);
+        console.log('drwa state, nextGameState.getWinnerId()', nextGameState.getWinnerId());
+        runFinishGameHandler(nextGameState);
       }
     }
     if (lastMessage.messageType === 'FinishedGameState') {
