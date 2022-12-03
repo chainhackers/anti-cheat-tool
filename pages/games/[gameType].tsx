@@ -329,6 +329,16 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
     //   gameType,
     // });
 
+    sendFirebaseMessage({
+      gameId: gameId,
+      messageType: 'FinishedGameState',
+      gameType,
+      message: { ...finishedGameResult, gameId },
+      senderAddress: account.address,
+      recipientAddress: opponentAddress,
+      sent: Date.now(),
+    });
+
     setFinishedGameState(finishedGameResult);
     setIsInDispute(false);
   };
@@ -447,10 +457,6 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
       setGameState(nextGameState);
       setIsInvalidMove(!isValid);
 
-      // console.log(
-      //   'nextGameState.getWinnerId() !== null',
-      //   nextGameState.getWinnerId() !== null,
-      // );
       if (nextGameState.getWinnerId() !== null) {
         setFinishGameCheckResult({ winner: playerIngameId === nextGameState.getWinnerId() });
         if (playerIngameId === nextGameState.getWinnerId()) {
