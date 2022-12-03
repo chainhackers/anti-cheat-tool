@@ -1,6 +1,6 @@
-import { IAnyMessage } from "hooks/useConversation";
+// import { IAnyMessage } from "hooks/useConversation";
 
 export interface XMTPChatLogElementPropsI{
-  anyMessage: IAnyMessage
+  // anyMessage: IAnyMessage
   children?: React.ReactNode;
 }

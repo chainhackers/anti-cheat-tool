@@ -1,5 +1,5 @@
-import { Conversation, Message, SortDirection, Stream } from '@xmtp/xmtp-js'
-import { ListMessagesPaginatedOptions } from '@xmtp/xmtp-js/dist/types/src/Client'
+// import { Conversation, Message, SortDirection, Stream } from '@xmtp/xmtp-js'
+// import { ListMessagesPaginatedOptions } from '@xmtp/xmtp-js/dist/types/src/Client'
 import { useState, useEffect, useContext } from 'react'
 import { ISignedGameMove } from 'types/arbiter'
 // import XmtpContext from '../contexts/xmtp'
@@ -16,7 +16,7 @@ import { TGameType } from 'types/game'
 
 export const MESSAGES_PER_PAGE = 20;
 
-let stream: Stream<Message>
+// let stream: Stream<Message>
 
 export type TMessageType = ISignedGameMove |
     GameProposedEventObject | GameStartedEventObject | GameFinishedEventObject |
@@ -34,17 +34,17 @@ export interface IGameMessage {
     message: TMessageType,
 }
 
-export interface IAnyMessage extends IGameMessage {
-    underlyingMessage: Message
-}
+// export interface IAnyMessage extends IGameMessage {
+//     underlyingMessage: Message
+// }
 
 
-async function sendMessage(conversation: Conversation | null, message: IGameMessage) {
-    if (!conversation) {
-        return
-    }
-    await conversation.send(JSON.stringify(message))
-}
+// async function sendMessage(conversation: Conversation | null, message: IGameMessage) {
+//     if (!conversation) {
+//         return
+//     }
+//     await conversation.send(JSON.stringify(message))
+// }
 
 export function parseMessageContent(message: any) {
     try {
@@ -54,68 +54,68 @@ export function parseMessageContent(message: any) {
     }
 }
 
-function filterMessages(
-    gameId: number,
-    incomingMessages: Message[]
-): {
-    firstMoveHere: boolean,
-    messages: IAnyMessage[]
-} {
-    let messages: IAnyMessage[] = []
-    let firstMoveHere = false;
-    for (const incomingMessage of incomingMessages) {
-        let parsedObject = parseMessageContent(incomingMessage);
-        if (!parsedObject) {
-            continue;
-        }
-        if (allMessageTypes.includes(parsedObject.messageType)) {
-            let thisGame = parsedObject.gameId === gameId;
-            if (thisGame) {
-                if (parsedObject.messageType === 'GameProposedEvent') {
-                    firstMoveHere = true;
-                }
-                parsedObject.underlyingMessage = incomingMessage;
-                messages.push(parsedObject);
-            }
-        }
-    }
-    return {
-        firstMoveHere,
-        messages
-    };
-}
+// function filterMessages(
+//     gameId: number,
+//     incomingMessages: Message[]
+// ): {
+//     firstMoveHere: boolean,
+//     messages: IAnyMessage[]
+// } {
+//     let messages: IAnyMessage[] = []
+//     let firstMoveHere = false;
+//     for (const incomingMessage of incomingMessages) {
+//         let parsedObject = parseMessageContent(incomingMessage);
+//         if (!parsedObject) {
+//             continue;
+//         }
+//         if (allMessageTypes.includes(parsedObject.messageType)) {
+//             let thisGame = parsedObject.gameId === gameId;
+//             if (thisGame) {
+//                 if (parsedObject.messageType === 'GameProposedEvent') {
+//                     firstMoveHere = true;
+//                 }
+//                 parsedObject.underlyingMessage = incomingMessage;
+//                 messages.push(parsedObject);
+//             }
+//         }
+//     }
+//     return {
+//         firstMoveHere,
+//         messages
+//     };
+// }
 
-async function getMessageHistory(conversation: Conversation, gameId: number, stopOnFirstMove: boolean):
-    Promise<{
-        messages: IAnyMessage[]
-    }> {
-    const paginationOptions: ListMessagesPaginatedOptions = {
-        pageSize: MESSAGES_PER_PAGE,
-        direction: SortDirection.SORT_DIRECTION_DESCENDING,
-    }
-    const paginator = conversation.messagesPaginated(paginationOptions);
-    const messages: IAnyMessage[] = [];
-    while (true) {
-        const page = await paginator.next()
-        if (page.done) {
-            console.warn('done loading messages');
-            break;
-        }
-        {
-            const {
-                firstMoveHere,
-                messages: _messages
-            } = filterMessages(gameId, page.value);
-            messages.push(..._messages);
-            if (firstMoveHere && stopOnFirstMove) {
-                break;
-            }
-        }
-    }
-    return {
-        messages,
-    };
-}
+// async function getMessageHistory(conversation: Conversation, gameId: number, stopOnFirstMove: boolean):
+//     Promise<{
+//         messages: IAnyMessage[]
+//     }> {
+//     const paginationOptions: ListMessagesPaginatedOptions = {
+//         pageSize: MESSAGES_PER_PAGE,
+//         direction: SortDirection.SORT_DIRECTION_DESCENDING,
+//     }
+//     const paginator = conversation.messagesPaginated(paginationOptions);
+//     const messages: IAnyMessage[] = [];
+//     while (true) {
+//         const page = await paginator.next()
+//         if (page.done) {
+//             console.warn('done loading messages');
+//             break;
+//         }
+//         {
+//             const {
+//                 firstMoveHere,
+//                 messages: _messages
+//             } = filterMessages(gameId, page.value);
+//             messages.push(..._messages);
+//             if (firstMoveHere && stopOnFirstMove) {
+//                 break;
+//             }
+//         }
+//     }
+//     return {
+//         messages,
+//     };
+// }
 
 const useConversation = (
     peerAddress: string,
@@ -123,10 +123,10 @@ const useConversation = (
     stopOnFirstMove: boolean,
 ) => {
     // const { client, initClient } = useContext(XmtpContext);
-    const [conversation, setConversation] = useState<Conversation | null>(null);
+    // const [conversation, setConversation] = useState<Conversation | null>(null);
     const [loading] = useState<boolean>(false);
-    const [collectedMessages, setCollectedMessages] = useState<IAnyMessage[]>([]);
-    const [lastMessages, setLastMessages] = useState<IAnyMessage[]>([]);
+    // const [collectedMessages, setCollectedMessages] = useState<IAnyMessage[]>([]);
+    // const [lastMessages, setLastMessages] = useState<IAnyMessage[]>([]);
 
     // useEffect(() => {
     //     const getConvo = async () => {
@@ -140,48 +140,48 @@ const useConversation = (
 
 
 
-    useEffect(() => {
-        if (!conversation) {
-            return
-        }
+    // useEffect(() => {
+    //     if (!conversation) {
+    //         return
+    //     }
 
-        function setMessageStates(messages: IAnyMessage[]) {
-            if (messages.length) {
-                setCollectedMessages((prevValue) => [...messages, ...prevValue])
-                setLastMessages(messages); //TODO
-            }
-        }
+    //     function setMessageStates(messages: IAnyMessage[]) {
+    //         if (messages.length) {
+    //             setCollectedMessages((prevValue) => [...messages, ...prevValue])
+    //             setLastMessages(messages); //TODO
+    //         }
+    //     }
 
-        const streamMessages = async () => {
-            stream = await conversation.streamMessages()
-            for await (const message of stream) {
-                const { messages } = filterMessages(gameId, [message]);
-                setMessageStates(messages);
-            }
-        }
+    //     const streamMessages = async () => {
+    //         stream = await conversation.streamMessages()
+    //         for await (const message of stream) {
+    //             const { messages } = filterMessages(gameId, [message]);
+    //             setMessageStates(messages);
+    //         }
+    //     }
     
-        getMessageHistory(conversation, gameId, stopOnFirstMove).then(({ messages }) => {
-            setMessageStates(messages);
-        }).then( // we can lose some useless messages here
-            () => streamMessages()
-        )
+    //     getMessageHistory(conversation, gameId, stopOnFirstMove).then(({ messages }) => {
+    //         setMessageStates(messages);
+    //     }).then( // we can lose some useless messages here
+    //         () => streamMessages()
+    //     )
 
-        return () => {
-            const closeStream = async () => {
-                if (!stream) return;
-                await stream.return();
-            }
-            closeStream();
-        }
-    }, [
-        conversation,
-    ])
+    //     return () => {
+    //         const closeStream = async () => {
+    //             if (!stream) return;
+    //             await stream.return();
+    //         }
+    //         closeStream();
+    //     }
+    // }, [
+    //     conversation,
+    // ])
 
     return {
         loading,
-        sendMessage: ((msg: IGameMessage) => sendMessage(conversation, msg)),
-        collectedMessages,
-        lastMessages,
+        // sendMessage: ((msg: IGameMessage) => sendMessage(conversation, msg)),
+        // collectedMessages,
+        // lastMessages,
         // initClient,
         // client
     }
