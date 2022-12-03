@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { NetworkType, BeaconEvent, defaultEventCallbacks } from '@airgap/beacon-dapp';
+import { TezosToolkit } from '@taquito/taquito';
 
 interface IWalletContex {
   isConnected: boolean;
@@ -21,6 +22,7 @@ interface IWalletContex {
   disconnectWallet: () => Promise<void>;
   userAddress: string | null;
   publicToken: string | null;
+  tezos: TezosToolkit;
 }
 
 const walletContextInitialvalue: IWalletContex = {
@@ -34,6 +36,7 @@ const walletContextInitialvalue: IWalletContex = {
   userAddress: null,
   publicToken: null,
   disconnectWallet: async () => undefined,
+  tezos: new TezosToolkit('https://ghostnet.ecadinfra.com'),
 };
 export const WalletContext = createContext<IWalletContex>(walletContextInitialvalue);
 
@@ -59,6 +62,8 @@ export const WalletContextProvider: React.FC<{ children: React.ReactNode }> = ({
     walletContextInitialvalue.userAddress,
   );
   const [wallet, setWallet] = useState<BeaconWallet | null>(walletContextInitialvalue.wallet);
+
+  const [tezos, setTezos] = useState<TezosToolkit>(walletContextInitialvalue.tezos);
 
   const connectWallet = async (): Promise<void> => {
     try {
@@ -111,6 +116,8 @@ export const WalletContextProvider: React.FC<{ children: React.ReactNode }> = ({
         },
       });
 
+      tezos.setWalletProvider(wallet!);
+
       setWallet(wallet);
 
       const activeAccount = await wallet.client.getActiveAccount();
@@ -135,6 +142,7 @@ export const WalletContextProvider: React.FC<{ children: React.ReactNode }> = ({
     publicToken,
     connectWallet,
     disconnectWallet,
+    tezos,
   };
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
 };
