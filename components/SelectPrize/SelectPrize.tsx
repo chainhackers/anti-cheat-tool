@@ -49,27 +49,27 @@ export const SelectPrize: React.FC<SelectPrizePropsI> = ({ createNewGameHandler 
             <div className={styles.freePrize}>{t('selectPrize.prize.free')}</div>
           </div>
         )}
-        {selected === 'stake' && (
+        {/* {selected === 'stake' && (
           <div className={styles.stake}>
             <div className={styles.stakeValue}>
               <span>{stakeValue}</span>{' '}
               <span className={styles.currency}>{t('selectPrize.prize.stake')}</span>
             </div>
-            {/* <div className={styles.stakes}>
+            <div className={styles.stakes}>
               <div onClick={() => setStakeValue('5.00')} className={styles.stakeButton}>
                 5.00
               </div>
               <div onClick={() => setStakeValue('10.00')} className={styles.stakeButton}>
                 10.00
               </div>
-            </div> */}
+            </div>
             <div className={styles.notification}>{`${t(
               'selectPrize.notification.p1',
             )} 0.01 ${t('selectPrize.prize.stake')}, ${t(
               'selectPrize.notification.p2',
             )} 0.02 ${t('selectPrize.prize.stake')}`}</div>
           </div>
-        )}
+        )} */}
       </div>
       <div className={styles.selection}>
         <div
@@ -98,7 +98,7 @@ export const SelectPrize: React.FC<SelectPrizePropsI> = ({ createNewGameHandler 
             </svg>
           </div>
         </div>
-        <div
+        {/* <div
           onClick={() => selectPrizeHandler('stake')}
           className={cn(
             styles.stake,
@@ -119,7 +119,7 @@ export const SelectPrize: React.FC<SelectPrizePropsI> = ({ createNewGameHandler 
               <circle cx="63.5" cy="63.5" r="58.5" strokeWidth="10" />
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.play}>

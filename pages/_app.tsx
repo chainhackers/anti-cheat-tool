@@ -7,12 +7,12 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { Layout } from 'components';
 import { WalletContextProvider } from 'contexts/WalltetContext';
-import { XmtpContextProvider } from 'contexts/XmtpContext';
+// import { XmtpContextProvider } from 'contexts/XmtpContext';
 import 'i18n/index';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import 'styles/globals.css';
-import XmtpProvider from "../contexts/XmtpProvider";
+// import XmtpProvider from "../contexts/XmtpProvider";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -51,18 +51,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <ApolloProvider client={client}>
         <WalletContextProvider>
-          <XmtpContextProvider>
+          {/* <XmtpContextProvider> */}
             <RainbowKitProvider chains={chains}>
-              <XmtpProvider>
+              {/* <XmtpProvider> */}
               <Layout version={version}>
                 <Head>
                   <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
                 <Component {...props} />
               </Layout>
-              </XmtpProvider>
+              {/* </XmtpProvider> */}
             </RainbowKitProvider>
-          </XmtpContextProvider>
+          {/* </XmtpContextProvider> */}
         </WalletContextProvider>
       </ApolloProvider>
     </WagmiConfig>
