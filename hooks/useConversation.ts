@@ -2,7 +2,7 @@ import { Conversation, Message, SortDirection, Stream } from '@xmtp/xmtp-js'
 import { ListMessagesPaginatedOptions } from '@xmtp/xmtp-js/dist/types/src/Client'
 import { useState, useEffect, useContext } from 'react'
 import { ISignedGameMove } from 'types/arbiter'
-import XmtpContext from '../contexts/xmtp'
+// import XmtpContext from '../contexts/xmtp'
 
 import {
     GameFinishedEventObject,
@@ -122,21 +122,21 @@ const useConversation = (
     gameId: number,
     stopOnFirstMove: boolean,
 ) => {
-    const { client, initClient } = useContext(XmtpContext);
+    // const { client, initClient } = useContext(XmtpContext);
     const [conversation, setConversation] = useState<Conversation | null>(null);
     const [loading] = useState<boolean>(false);
     const [collectedMessages, setCollectedMessages] = useState<IAnyMessage[]>([]);
     const [lastMessages, setLastMessages] = useState<IAnyMessage[]>([]);
 
-    useEffect(() => {
-        const getConvo = async () => {
-            if (!client || !peerAddress) {
-                return
-            }
-            setConversation(await client.conversations.newConversation(peerAddress))
-        }
-        getConvo()
-    }, [client, peerAddress])
+    // useEffect(() => {
+    //     const getConvo = async () => {
+    //         if (!client || !peerAddress) {
+    //             return
+    //         }
+    //         setConversation(await client.conversations.newConversation(peerAddress))
+    //     }
+    //     getConvo()
+    // }, [client, peerAddress])
 
 
 
@@ -182,8 +182,8 @@ const useConversation = (
         sendMessage: ((msg: IGameMessage) => sendMessage(conversation, msg)),
         collectedMessages,
         lastMessages,
-        initClient,
-        client
+        // initClient,
+        // client
     }
 }
 
