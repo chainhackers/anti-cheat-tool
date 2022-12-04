@@ -16,8 +16,17 @@ import useFirebaseConversation from 'hooks/useFirebaseConversation';
 import { async } from '@firebase/util';
 import { midnightTheme } from '@rainbow-me/rainbowkit';
 import { cteateSessionSigner } from 'tezos';
+import { Parser, packDataBytes, MichelsonData, MichelsonType } from '@taquito/michel-codec';
+import { TezosToolkit, MichelsonMap } from '@taquito/taquito';
+
+
+
+
+
+
 // import { useWalletContext } from 'contexts/WalltetContext';
 import { sign } from 'crypto';
+import { getSessionWallet } from 'helpers/session_signatures';
 const contractAddress: string = 'KT1QMGSLynvwwSfGbaiJ8gzWHibTCweCGcu8';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // const contractAddress2: string = 'KT1UZzu4ar6STUj2Mxde2hKH8LncCmY2vfjt';
@@ -26,7 +35,7 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // import { InMemorySigner } from '@taquito/signer';
 
 // let signer = InMemorySigner.fromSecretKey(key);
-const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
+const arbiterContractAddress = 'KT1DXd41KEesjfzMLM4tFMCRbdUUgMBPxmsP';
 
 const TezTest = () => {
   // const [Tezos, setTezos] = useState<TezosToolkit>(
@@ -104,7 +113,8 @@ const TezTest = () => {
       if (!userAddress) throw new Error('no user address');
       const contract = await tezos.wallet.at(arbiterContractAddress);
 
-      const op = await contract.methods.proposeGame(contractAddress).send();
+      const op = await contract.methods.proposeGame(contractAddress, await cteateSessionSigner(userAddress)).send();
+
       // console.log(op);
       const confirmation = await op.confirmation(1);
 
@@ -136,6 +146,7 @@ const TezTest = () => {
   const acceptGameHandler = async () => {
     setGameAccepted(null);
     try {
+      if (!userAddress) throw new Error('no user address');
       if (!gameIdToAccept || Number.isNaN(Number(gameIdToAccept)))
         throw new Error('game id not a number');
       const game = await getDocumentById(db, 'testgames', gameIdToAccept);
@@ -145,7 +156,7 @@ const TezTest = () => {
 
       const contract = await tezos.wallet.at(arbiterContractAddress);
 
-      const op = await contract.methods.acceptGame(gameIdToAccept).send();
+      const op = await contract.methods.acceptGame(gameIdToAccept, await cteateSessionSigner(userAddress)).send();
       console.log(op);
       const confirmation = await op.confirmation(1);
       console.log(confirmation);
@@ -160,12 +171,67 @@ const TezTest = () => {
   };
 
   const disputeMoveHandler = async () => {
-    const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
+
     const contract = await tezos.wallet.at(arbiterContractAddress);
 
-    const gameId = [1];
 
-    const gameMove = {
+//     const data = `(Pair 
+// (Pair
+//   { Elt 1 
+//    (Pair
+//       (Pair "tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN" "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx")
+//             0x0501000000026869) }
+// 10000000)
+// (Pair 2 333))`;
+
+    //const type = `(pair (pair (map int (pair (pair address address) bytes)) int) (pair int int))`;
+
+    const board = [0,0,0,
+      0,0,0,
+      0,0,0,]
+
+    const xwins = false;
+    const owins = false;
+
+    function toBBBString(value: boolean) {
+      return value? "True": "False";
+    }
+
+    const stateData2 = `(Pair (Pair {
+      Elt 0 ${board[0]} ;
+      Elt 1 ${board[1]} ;
+      Elt 2 ${board[2]} ;
+      Elt 3 ${board[3]} ;
+      Elt 4 ${board[4]} ;
+      Elt 5 ${board[5]} ;
+      Elt 6 ${board[6]} ;
+      Elt 7 ${board[7]} ;
+      Elt 8 ${board[8]} }
+      ${toBBBString(xwins)})
+      ${toBBBString(owins)})`
+
+    const stateTypes2 = `(pair (pair (map int int)
+    bool)
+    bool)`
+
+    {
+      const p = new Parser();
+      const typeJSON = p.parseMichelineExpression(stateTypes2);
+      console.log("typeJSON", typeJSON)
+      const dataJSON = p.parseMichelineExpression(stateData2);
+      console.log("dataJSON", dataJSON)
+      
+
+      const packed = packDataBytes(
+        dataJSON  as MichelsonData,
+        typeJSON  as MichelsonType
+      );
+      console.log("packed state", packed)
+    }
+
+    
+
+    const data = {
       game_id: 1,
       move: '0x050000',
       new_state:
@@ -176,12 +242,73 @@ const TezTest = () => {
       player: 'edpkvDAatRUADfmmkXvTVDydxTupAd3z8e8ngpzp8vKMRjaQtRxbY5',
     };
 
+    const newMapfromLiteral = MichelsonMap.fromLiteral(data);
+    console.log("newMapfromLiteral", newMapfromLiteral)
+    
+    const type1 = `(pair %game_move
+      (pair (pair (nat %game_id) (bytes %move)) (bytes %new_state) (nat %nonce))
+      (bytes %old_state)
+      (key %player))`;
+
+    const type2 = `(pair (pair (nat %game_id) (bytes %move)) (bytes %new_state) (nat %nonce))
+      (bytes %old_state)
+      (key %player)`;
+
+    const data1 =  `(Pair
+      (Pair (Pair Elt ${data.game_id} ${data.move}) ${data.new_state} ${data.nonce})
+      ${data.old_state}
+      "${data.player}"
+      )`
+    
+    const data2 = `(Pair (Pair Elt ${data.game_id} ${data.move}) ${data.new_state} ${data.nonce})
+      ${data.old_state}
+      "${data.player}"` 
+
+    console.log(data1);
+    console.log(data2);
+    
+
+    // We first use the `Parser` class and its `parseMichelineExpression` method to transform the Michelson data and type into their JSON representation
+    {
+      const p = new Parser();
+      const typeJSON = p.parseMichelineExpression(type1);
+      console.log("typeJSON", typeJSON)
+      const dataJSON = p.parseMichelineExpression(data1);
+      console.log("dataJSON", dataJSON)
+      
+
+      const packed = packDataBytes(
+        dataJSON  as MichelsonData,
+        typeJSON  as MichelsonType
+      );
+      console.log("packed", packed)
+    }
+    // We first use the `Parser` class and its `parseMichelineExpression` method to transform the Michelson data and type into their JSON representation
+    {
+      const p = new Parser();
+      const typeJSON = p.parseMichelineExpression(type2);
+      console.log("typeJSON", typeJSON)
+      const dataJSON = p.parseMichelineExpression(data2);
+      console.log("dataJSON", dataJSON)
+      
+
+      const packed = packDataBytes(
+        dataJSON  as MichelsonData,
+        typeJSON  as MichelsonType
+      );
+      console.log("packed", packed)
+    }
+
+    const gameId = [1];
+
+    
+
     const signatures = {
       tz1eqJtX6Gyv9ZVmcTFo4pB34TTLcCkmnxPi:
         'edsigtcAHRJed7rp7jE2ikhUnr5pjvkRnhAvWwVHGxyckozizyB3ADowdVr5b1BBBynvj5ynZoGAyzzxrV3JRLswUuBp32yxQVY',
     };
     const op = await contract.methodsObject
-      .disputeMove({ game_move: gameMove, signatures })
+      .disputeMove({ game_move: data, signatures })
       .send();
     console.log(op);
   };
