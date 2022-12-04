@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderPropsI> = ({ version }) => {
       </div>
       <div className={styles.right}>
         {currentPath?.split('?')[0] !== 'connect' && <Navigation active={currentPath} />}
-        {currentPath?.split('?')[0] !== 'connect' && <ConnectButton />}
+        {/* {currentPath?.split('?')[0] !== 'connect' && <ConnectButton />} */}
         <WalletConnector />
       </div>
     </div>

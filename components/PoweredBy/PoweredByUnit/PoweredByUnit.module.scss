@@ -11,5 +11,24 @@
     width: 120px;
     white-space: wrap;
     word-wrap: break-word;
+    transition: all 0.2s;
   }
+  .logo {
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    .logo {
+      transform: scale(1.1);
+    }
+
+    .name {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: currentColor;
 }

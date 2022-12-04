@@ -79,6 +79,18 @@ export const SelectGame: React.FC<SelectGamePropsI> = ({
 
   return (
     <div className={styles.container}>
+      {creatingGame !== null && (
+        <div
+          className={styles.modal}
+          onClick={() => {
+            if (creatingGame === false) setCreatingGame(null);
+          }}
+        >
+          <div className={styles.dialog}>
+            {creatingGame ? 'Creating new game...' : 'Failed to create new game'}
+          </div>
+        </div>
+      )}
       <div className={styles.title}>{t('selectGame.title')}</div>
       <div className={styles.description}>{t('selectGame.description')}</div>
       <div className={styles.avatar}>
@@ -87,11 +99,11 @@ export const SelectGame: React.FC<SelectGamePropsI> = ({
       <div className={styles.userName}>
         {userAddress ? userAddress : t('selectGame.unknownUser')}
       </div>
-      {creatingGame !== null && (
+      {/* {creatingGame !== null && (
         <p style={{ fontSize: '4rem' }}>
           {creatingGame ? 'Creating new game...' : 'Failed to create new game'}
         </p>
-      )}
+      )} */}
       {
         <div className={styles.selection}>
           <div className={styles.new}>
@@ -100,7 +112,7 @@ export const SelectGame: React.FC<SelectGamePropsI> = ({
             {/* <Link href={'/games/' + gameType + '?prize=true'}> */}
             {/* <a> */}
             <div className={styles.button} onClick={proposeGameHandler}>
-              {t('selectGame.new.button')}
+              <span>{t('selectGame.new.button')}</span>
             </div>
             {/* </a> */}
             {/* </Link> */}
@@ -110,7 +122,9 @@ export const SelectGame: React.FC<SelectGamePropsI> = ({
             <div className={styles.description}>{t('selectGame.join.description')}</div>
             <Link href={'/games/' + gameType + '?join=true'}>
               <a>
-                <div className={styles.button}>{t('selectGame.join.button')}</div>
+                <div className={styles.button}>
+                  <span>{t('selectGame.join.button')}</span>
+                </div>
               </a>
             </Link>
           </div>

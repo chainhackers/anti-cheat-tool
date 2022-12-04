@@ -24,7 +24,7 @@ const en = {
       },
     },
     gameTypePage: {
-      title: 'Choose a game demo',
+      title: 'Run a game demo to try',
       description: 'Experience the protocol yourself. It just works. ✨',
       games: {
         ticTacToe: 'Tic-Tac-Toe',
@@ -34,7 +34,7 @@ const en = {
     selectGame: {
       unknownUser: 'unknown',
       title: 'How would you like to begin?',
-      description: 'Start a game or join a game',
+      description: 'Start a new game or join your friend',
       new: {
         title: 'New?',
         description: 'Start a new game',
