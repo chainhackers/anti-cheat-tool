@@ -19,3 +19,4 @@ export * from 'components/RightPanel';
 export * from 'components/Players';
 export * from 'components/TeamMember';
 export * from 'components/ChatLog';
+export * from 'components/WalletConnector';

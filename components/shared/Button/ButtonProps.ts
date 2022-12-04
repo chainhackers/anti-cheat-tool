@@ -1,8 +1,12 @@
-import React from 'react';
-export interface ButtonPropsI extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IButtonProps {
   children?: React.ReactNode;
-  title?: string;
-  color?: 'black' | 'white' | 'red';
+  value?: string;
+  onClick?: () => void | Promise<void>;
+  type?: 'button' | 'submit';
+  width?: 'w200' | 'w100p';
+  color?: 'black' | 'red';
+  size?: 'sm';
   borderless?: boolean;
-  size?: 'sm' | 'md';
+  disabled?: boolean;
+  title?: string;
 }

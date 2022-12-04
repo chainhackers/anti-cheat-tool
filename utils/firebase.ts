@@ -49,12 +49,12 @@ export const addDataWithCustomId = async (
   database: Firestore,
   collectionName: string,
   data: { [fieldName: string]: any },
-  documentId: string,
+  documentId: string | number,
 ) => {
   console.log(collectionName, documentId, data);
 
   try {
-    await setDoc(doc(database, collectionName, documentId), data);
+    await setDoc(doc(database, collectionName, String(documentId)), data);
     return {
       documentId,
       message: `Document with id: "${documentId}" successfully added to the collection "${collectionName}"`,

@@ -1,27 +1,40 @@
 import cn from 'classnames';
-import { ButtonPropsI } from './ButtonProps';
+import { IButtonProps } from './ButtonProps';
 import styles from './Button.module.scss';
-export const Button: React.FC<ButtonPropsI> = ({
-  children,
-  title = 'Button',
-  color = 'white',
-  borderless = false,
-  size = 'md',
-  ...props
+export const Button: React.FC<IButtonProps> = ({
+  value = 'button',
+  onClick = () => undefined,
+  type = 'button',
+  width = 'unset',
+  color = 'default_color',
+  disabled,
+  size = 'default',
+  borderless,
+  title,
 }) => {
+  const clickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
+    onClick();
+  };
+
   return (
-    <button
-      className={cn(
-        styles.container,
-        styles[color],
-        styles[size],
-        borderless ? styles.borderless : null,
-        props.disabled ? styles.disabled : null,
-      )}
-      {...props}
-    >
-      {title}
-      {children}
-    </button>
+    <div className={styles.container}>
+      <button
+        type={type}
+        className={cn(
+          styles.button,
+          styles[width],
+          styles[color],
+          styles[borderless ? 'borderless' : 'default'],
+          styles[size],
+          styles[disabled ? 'disabled' : 'default'],
+          styles.capitalise,
+        )}
+        onClick={clickHandler}
+        disabled={disabled}
+      >
+        
+        {!!title ? title : value}
+      </button>
+    </div>
   );
 };

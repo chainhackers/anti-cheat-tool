@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Logo, Navigation, NavPath } from 'components';
+import { Logo, Navigation, NavPath, WalletConnector } from 'components';
 import { HeaderPropsI } from './HeaderProps';
 import styles from './Header.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-export const Header: React.FC<HeaderPropsI> = ({version}) => {
+export const Header: React.FC<HeaderPropsI> = ({ version }) => {
   const { t } = useTranslation();
   const { asPath } = useRouter();
   const parsedPath = asPath.split('/').filter((el) => el.length !== 0);
@@ -28,6 +28,7 @@ export const Header: React.FC<HeaderPropsI> = ({version}) => {
       <div className={styles.right}>
         {currentPath?.split('?')[0] !== 'connect' && <Navigation active={currentPath} />}
         {currentPath?.split('?')[0] !== 'connect' && <ConnectButton />}
+        <WalletConnector />
       </div>
     </div>
   );
