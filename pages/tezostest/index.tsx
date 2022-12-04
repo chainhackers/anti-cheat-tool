@@ -134,7 +134,7 @@ const TezTest = () => {
       const contract = await tezos.wallet.at(arbiterContractAddress);
 
       const op = await contract.methods.acceptGame(gameIdToAccept).send();
-      // console.log(op);
+      console.log(op);
       const confirmation = await op.confirmation(1);
       console.log(confirmation);
       const gameUpdateData = { ...game, acceptor: userAddress, txAcceptHash: op.opHash };
@@ -147,7 +147,25 @@ const TezTest = () => {
     }
   };
 
-  const disputeMoveHandler = () => {};
+  const disputeMoveHandler = async () => {
+    const contract = await tezos.wallet.at(arbiterContractAddress);
+
+    const gameId = [1];
+
+    const gameMove = {
+      game_id: 1,
+      move: '0x050000',
+      new_state:
+        '0x0507070707020000003607040000000007040001000007040002000007040003000007040004000007040005000007040006000007040007000007040008000003030303',
+      nonce: 0,
+      old_state:
+        '0x0507070707020000003607040000000007040001000007040002000007040003000007040004000007040005000007040006000007040007000007040008000003030303',
+      player: 'edpkvDAatRUADfmmkXvTVDydxTupAd3z8e8ngpzp8vKMRjaQtRxbY5',
+    };
+
+    const op = await contract.methods.disputeMove(1).send();
+    console.log(op);
+  };
 
   return (
     <div
