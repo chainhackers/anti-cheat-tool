@@ -1,22 +1,22 @@
 [
   {
-    "name": "XMTP",
-    "image": "/logo/xmtp-logo.png",
-    "href": "https://xmtp.org/"
+    "name": "Tezos",
+    "image": "/logo/tezos-xtz-icon.png",
+    "href": "https://tezos.com/"
   },
   {
-    "name": "The Graph",
-    "image": "/logo/graph-logo.webp",
-    "href": "https://thegraph.com/"
+    "name": "Taquito",
+    "image": "/logo/taquito.png",
+    "href": "https://tezostaquito.io"
   },
   {
-    "name": "Polygon",
-    "image": "/logo/polygon-matic-logo.png",
-    "href": "https://polygon.technology/"
+    "name": "Beacon",
+    "image": "/logo/beacon.png",
+    "href": "https://www.walletbeacon.io/"
   },
   {
-    "name": "Sismo",
-    "image": "/logo/sismo-logo.png",
-    "href": "https://www.sismo.io/"
+    "name": "Temple",
+    "image": "/logo/templewallet.png",
+    "href": "https://templewallet.com/"
   }
 ]

@@ -92,6 +92,7 @@ export const JoinGame: React.FC<JoinGamePropsI> = () => {
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const { value } = event.currentTarget.gameid;
+    if (value === '') return;
     //TO: add gameId handler
     // console.log(router.query);
 
@@ -100,7 +101,20 @@ export const JoinGame: React.FC<JoinGamePropsI> = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{t('joinGame.title')}</div>
+      {joiningGame !== null && (
+        <div
+          className={styles.modal}
+          onClick={() => {
+            if (joiningGame === false) setJoiningGame(null);
+          }}
+        >
+          <div className={styles.dialog}>
+            {joiningGame ? 'Joining game...' : 'Failed to join the game'}
+          </div>
+        </div>
+      )}
+      <div className={styles.h1}>{t('joinGame.title')}</div>
+      <div className={styles.description}>Ask your freind for a game id to join</div>
       <form className={styles.form} onSubmit={submitHandler}>
         <div className={styles.inputgroup}>
           <input
@@ -116,11 +130,11 @@ export const JoinGame: React.FC<JoinGamePropsI> = () => {
         </div>
         <Button type="submit" value="submit" width="w200" color="black" />
       </form>
-      {joiningGame !== null && (
+      {/* {joiningGame !== null && (
         <p style={{ fontSize: '2rem', marginLeft: '2rem' }}>
           {`Game ${joiningGame ? 'Joining game...' : 'Game not joined'}`}
         </p>
-      )}
+      )} */}
       {gameAccepted !== null && (
         <p style={{ fontSize: '2rem', marginLeft: '2rem' }}>
           {`Game ${gameAccepted ? 'accepted' : 'not accepted'}`}
