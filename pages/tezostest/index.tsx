@@ -186,6 +186,28 @@ const TezTest = () => {
 
     //const type = `(pair (pair (map int (pair (pair address address) bytes)) int) (pair int int))`;
 
+    const move = 5; 
+
+    const moveData2 = `${move}`;
+
+    const moveTypes2 = `int`
+
+    {
+      const p = new Parser();
+      const typeJSON = p.parseMichelineExpression(moveTypes2);
+      console.log("typeJSON", typeJSON)
+      const dataJSON = p.parseMichelineExpression(moveData2);
+      console.log("dataJSON", dataJSON)
+      
+
+      const packed = packDataBytes(
+        dataJSON  as MichelsonData,
+        typeJSON  as MichelsonType
+      );
+      console.log("packed move", packed)
+    }
+
+
     const board = [0,0,0,
       0,0,0,
       0,0,0,]
