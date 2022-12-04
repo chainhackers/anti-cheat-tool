@@ -163,7 +163,11 @@ const TezTest = () => {
       player: 'edpkvDAatRUADfmmkXvTVDydxTupAd3z8e8ngpzp8vKMRjaQtRxbY5',
     };
 
-    const op = await contract.methods.disputeMove(1).send();
+    const signatures = [
+      'edsigtcAHRJed7rp7jE2ikhUnr5pjvkRnhAvWwVHGxyckozizyB3ADowdVr5b1BBBynvj5ynZoGAyzzxrV3JRLswUuBp32yxQVY',
+    ];
+
+    const op = await contract.methods.disputeMove({ gameMove, signatures }).send();
     console.log(op);
   };
 

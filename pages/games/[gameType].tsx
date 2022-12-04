@@ -46,6 +46,9 @@ import { PlayerI, TGameType } from 'types/game';
 import useFirebaseConversation from 'hooks/useFirebaseConversation';
 import { ITicTacToeProps } from 'components/Games/Tic-Tac-Toe/ITicTacToeProps';
 
+import { useWalletContext } from 'contexts/WalltetContext';
+import { db, subcribeListeningByDocumentId } from 'utils';
+
 interface IGamePageProps {
   gameType: TGameType;
   version?: string;
@@ -60,6 +63,8 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const FETCH_OPPONENT_ADDRESS_TIMEOUT = 2500;
 
 const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
+  const { userAddress } = useWalletContext();
+
   const [playerIngameId, setPlayerIngameId] = useState<0 | 1>(0);
   const [isInDispute, setIsInDispute] = useState<boolean>(false);
   const [finishedGameState, setFinishedGameState] = useState<FinishedGameState | null>(null);
@@ -69,7 +74,7 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
   const [opponentAddress, setOpponentAddress] = useState<string | null>(null);
 
   const [isInvalidMove, setIsInvalidMove] = useState<boolean>(false);
-  
+
   const [players, setPlayers] = useState<PlayerI[]>([]);
 
   const [isTimeoutInited, setIsTimeoutInited] = useState<boolean>(false);
@@ -96,6 +101,7 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
   };
 
   const gameId = parseInt(query.game as string);
+  console.log('GAMEID', gameId);
 
   const getInitialState = () => {
     const playerType: TPlayer = playerIngameId === 0 ? 'X' : 'O';
@@ -521,10 +527,12 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
       }
     };
 
+    console.log(playerIngameId, userAddress, opponentAddress);
+
     setPlayers([
       {
         playerName: playerIngameId === 0 ? 'Player1' : 'Player2',
-        address: gameId && account.address ? account.address : null,
+        address: gameId && userAddress ? userAddress : null,
         avatarUrl: '/images/empty_avatar.png',
         playerType: playersTypesMap[gameType][playerIngameId],
         moves: isPlayerMoves(gameType, gameState, playerIngameId),
@@ -547,36 +555,52 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
     setIsDisputeAvailavle(false);
   }, [isInvalidMove]);
 
-  useInterval(async () => {
-    if (opponentAddress) {
-      return;
-    }
-    if (!gameId) {
-      return;
-    }
-    console.log('polling for opponent address, gameId=', gameId);
-    let players: [string, string] = await gameApi.getPlayers(
-      getArbiter(),
-      BigNumber.from(gameId),
-    );
-    const address = account.address;
-    if (!address) {
-      return;
-    }
-    if (
-      !(players[0] === ZERO_ADDRESS && players[1] === ZERO_ADDRESS) &&
-      !players.includes(address)
-    ) {
-      throw new Error(`Player ${address} is not in game ${gameId}, players: ${players}`);
-    }
-    const inGameId = players.indexOf(address) == 0 ? 0 : 1;
-    setPlayerIngameId(inGameId);
-    let opponent = players[1 - inGameId];
-    if (!opponent || opponent == ZERO_ADDRESS) {
-      return;
-    }
-    setOpponentAddress(opponent);
-  }, FETCH_OPPONENT_ADDRESS_TIMEOUT);
+  // useInterval(async () => {
+  //   if (opponentAddress) {
+  //     return;
+  //   }
+  //   if (!gameId) {
+  //     return;
+  //   }
+  //   console.log('polling for opponent address, gameId=', gameId);
+  //   let players: [string, string] = await gameApi.getPlayers(
+  //     getArbiter(),
+  //     BigNumber.from(gameId),
+  //   );
+  //   const address = account.address;
+  //   if (!address) {
+  //     return;
+  //   }
+  //   if (
+  //     !(players[0] === ZERO_ADDRESS && players[1] === ZERO_ADDRESS) &&
+  //     !players.includes(address)
+  //   ) {
+  //     throw new Error(`Player ${address} is not in game ${gameId}, players: ${players}`);
+  //   }
+  //   const inGameId = players.indexOf(address) == 0 ? 0 : 1;
+  //   setPlayerIngameId(inGameId);
+  //   let opponent = players[1 - inGameId];
+  //   if (!opponent || opponent == ZERO_ADDRESS) {
+  //     return;
+  //   }
+  //   setOpponentAddress(opponent);
+  // }, FETCH_OPPONENT_ADDRESS_TIMEOUT);
+
+  useEffect(() => {
+    const dataProcess = (data: any) => {
+      if (data) {
+        console.log('receviued data', data.acceptor, playerIngameId);
+        setPlayerIngameId(data.proposer === userAddress ? 0 : 1);
+        setOpponentAddress(data.proposer === userAddress ? data.acceptor : data.proposer);
+      }
+    };
+    const unsubscribe = subcribeListeningByDocumentId(db, 'testgames', dataProcess, gameId);
+    return unsubscribe;
+  }, [gameId]);
+
+  useEffect(() => {
+    // const game = await getDocumentById(db, 'testgames', gameIdToAccept);
+  }, [opponentAddress]);
 
   if (!!gameType && !!query && query?.join === 'true') {
     return <JoinGame acceptGameHandler={acceptGameHandler} />;

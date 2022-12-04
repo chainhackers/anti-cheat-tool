@@ -87,9 +87,9 @@ export const subcribeListeningByDocumentId = (
   database: Firestore,
   collectionName: string,
   cb: (data: any) => void,
-  documentId: string,
+  documentId: string | number,
 ) => {
-  const unsubscribe = onSnapshot(doc(database, collectionName, documentId), (doc) => {
+  const unsubscribe = onSnapshot(doc(database, collectionName, String(documentId)), (doc) => {
     const source = doc.metadata.hasPendingWrites ? 'Local' : 'Server';
     console.log(source, ' data: ', doc.data());
     cb(doc.data());
