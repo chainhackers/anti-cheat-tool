@@ -36,7 +36,7 @@ return (
               title={t('buttons.tryDemo')}
               color="black"
               borderless
-              onClick={() => router.push('/games')}
+              // onClick={() => router.push('/games')}
             />
           </div>
         </div>
