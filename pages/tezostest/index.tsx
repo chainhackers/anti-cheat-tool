@@ -15,7 +15,9 @@ import {
 import useFirebaseConversation from 'hooks/useFirebaseConversation';
 import { async } from '@firebase/util';
 import { midnightTheme } from '@rainbow-me/rainbowkit';
-
+import { cteateSessionSigner } from 'tezos';
+// import { useWalletContext } from 'contexts/WalltetContext';
+import { sign } from 'crypto';
 const contractAddress: string = 'KT1QMGSLynvwwSfGbaiJ8gzWHibTCweCGcu8';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // const contractAddress2: string = 'KT1UZzu4ar6STUj2Mxde2hKH8LncCmY2vfjt';
@@ -24,7 +26,7 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // import { InMemorySigner } from '@taquito/signer';
 
 // let signer = InMemorySigner.fromSecretKey(key);
-const arbiterContractAddress = 'KT1UZzu4ar6STUj2Mxde2hKH8LncCmY2vfjt';
+const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
 
 const TezTest = () => {
   // const [Tezos, setTezos] = useState<TezosToolkit>(
@@ -37,7 +39,17 @@ const TezTest = () => {
   const { wallet, tezos, isConnected, activeAccount, userAddress, publicToken } =
     useWalletContext();
 
-  const clickHandlerInc = async () => {
+  const clickHandler = async () => {
+    const signer = await cteateSessionSigner(userAddress!);
+    // console.log(await signer());
+    console.log(await await signer.publicKey());
+    console.log(await await signer.publicKeyHash());
+    console.log(await await signer.secretKey());
+
+    const contract = await tezos.wallet.at(arbiterContractAddress);
+
+    console.log(await contract.storage());
+    // console.log(await (await signer()).sign());
     // // const wallet2 = new BeaconWallet({
     // //   name: 'Taquito React template',
     // //   preferredNetwork: NetworkType.GHOSTNET,
@@ -148,6 +160,7 @@ const TezTest = () => {
   };
 
   const disputeMoveHandler = async () => {
+    const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
     const contract = await tezos.wallet.at(arbiterContractAddress);
 
     const gameId = [1];
@@ -163,11 +176,13 @@ const TezTest = () => {
       player: 'edpkvDAatRUADfmmkXvTVDydxTupAd3z8e8ngpzp8vKMRjaQtRxbY5',
     };
 
-    const signatures = [
-      'edsigtcAHRJed7rp7jE2ikhUnr5pjvkRnhAvWwVHGxyckozizyB3ADowdVr5b1BBBynvj5ynZoGAyzzxrV3JRLswUuBp32yxQVY',
-    ];
-
-    const op = await contract.methods.disputeMove({ gameMove, signatures }).send();
+    const signatures = {
+      tz1eqJtX6Gyv9ZVmcTFo4pB34TTLcCkmnxPi:
+        'edsigtcAHRJed7rp7jE2ikhUnr5pjvkRnhAvWwVHGxyckozizyB3ADowdVr5b1BBBynvj5ynZoGAyzzxrV3JRLswUuBp32yxQVY',
+    };
+    const op = await contract.methodsObject
+      .disputeMove({ game_move: gameMove, signatures })
+      .send();
     console.log(op);
   };
 
@@ -251,6 +266,10 @@ const TezTest = () => {
         <div>
           <h6>Dispute move:</h6>
           <Button value="dispute move" onClick={disputeMoveHandler} />
+        </div>
+        <div>
+          <h6>signer</h6>
+          <Button value="get signer" onClick={clickHandler} />
         </div>
       </div>
     </div>

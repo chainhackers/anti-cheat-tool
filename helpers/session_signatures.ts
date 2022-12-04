@@ -1,9 +1,11 @@
+import { InMemorySigner } from '@taquito/signer';
 import { ethers } from 'ethers';
-import {IGameMove} from "../types/arbiter";
+import { IGameMove } from '../types/arbiter';
+import { char2Bytes } from '@taquito/utils';
+import { cteateSessionSigner } from 'tezos';
+import { RpcClient } from '@taquito/rpc';
 
-export async function getSessionWallet(
-  address: string,
-): Promise<ethers.Wallet> {
+export async function getSessionWallet(address: string): Promise<ethers.Wallet> {
   console.log(`Waller requested for address ${address}`);
   let localStorage = window.localStorage;
   let privateStore = `${address}_private`;
@@ -35,18 +37,24 @@ const types = {
   ],
 };
 
-export async function signMove(
-  gameMove: IGameMove,
-  wallet: ethers.Wallet,
-): Promise<string> {
-  let signPromise = wallet._signTypedData(domain, types, gameMove);
-  console.log({signPromise});
-  return signPromise;
+// export async function signMove(gameMove: IGameMove, wallet: ethers.Wallet): Promise<string> {
+//   let signPromise = wallet._signTypedData(domain, types, gameMove);
+//   console.log({ signPromise });
+//   return signPromise;
+// }
+
+export async function signMove(gameMove: IGameMove, signer: InMemorySigner) {
+  console.log(gameMove);
+  const client = new RpcClient('https://ghostnet.ecadinfra.com', 'test');
+  const bytes = await client.packData({ data: { str}, type: { }});
+  const signature = signer.sign(bytes.packed);
+  return (await signature).sig;
 }
 
 export async function signMoveWithAddress(
-    gameMove: IGameMove,
-    address: string,
+  gameMove: IGameMove,
+  address: string,
 ): Promise<string> {
-  return signMove(gameMove, await getSessionWallet(address));
+  return signMove(gameMove, await cteateSessionSigner(address));
+  // return signMove(gameMove, await getSessionWallet(address));
 }

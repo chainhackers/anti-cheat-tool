@@ -20,6 +20,8 @@
     "@apollo/client": "^3.6.9",
     "@rainbow-me/rainbowkit": "^0.5.1",
     "@taquito/beacon-wallet": "^14.2.0",
+    "@taquito/rpc": "^14.2.0",
+    "@taquito/signer": "^14.2.0",
     "@taquito/taquito": "^14.2.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "autoprefixer": "^10.4.12",

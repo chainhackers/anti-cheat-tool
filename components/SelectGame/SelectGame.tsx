@@ -16,7 +16,8 @@ import {
   updateDocumentData,
 } from 'utils';
 
-const arbiterContractAddress = 'KT1UZzu4ar6STUj2Mxde2hKH8LncCmY2vfjt';
+// const arbiterContractAddress = 'KT1UZzu4ar6STUj2Mxde2hKH8LncCmY2vfjt';
+const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const SelectGame: React.FC<SelectGamePropsI> = ({

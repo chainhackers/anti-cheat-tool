@@ -32,7 +32,7 @@ export const WalletConnector: React.FC<IWalletConnectorProps> = () => {
     <div className={styles.container}>
       {isConnected ? (
         <Button
-          value={isShowConnecting ? 'connecting...' : 'discconnect wallet'}
+          value={isShowConnecting ? 'connecting...' : 'disconnect wallet'}
           onClick={discconnectWalletHandler}
         />
       ) : (

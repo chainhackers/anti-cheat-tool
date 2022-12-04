@@ -18,11 +18,11 @@ export const Header: React.FC<HeaderPropsI> = ({ version }) => {
       ) : // <NavPath path={'Game Demo'} />
       null}
       <div className={styles.left}>
-        <Link href="/">
-          <a>
-            <Logo image="/logo/gj-logo.png" />
-          </a>
-        </Link>
+        {/* <Link href="/"> */}
+          {/* <a> */}
+            <Logo image="/logo/gj-logo.png" href="/"/>
+          {/* </a> */}
+        {/* </Link> */}
         <div className={styles.version}>{`Ver.${version}`}</div>
       </div>
       <div className={styles.right}>

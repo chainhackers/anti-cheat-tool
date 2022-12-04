@@ -1,10 +1,20 @@
-import { LogoPropsI } from './LogoProps';
 import Image from 'next/image';
+import Link from 'next/link';
+import cn from 'classnames';
+import { ILogoProps } from './LogoProps';
 import styles from './Logo.module.scss';
-export const Logo: React.FC<LogoPropsI> = ({ image }) => {
+export const Logo: React.FC<ILogoProps> = ({ image, href, className }) => {
   return (
-    <div className={styles.container}>
-      <Image src={image ? image : ''} width="77px" height="77px" alt="logo" />
+    <div className={cn(styles.container, className)}>
+      {href ? (
+        <Link href={href} className={cn(styles.link, className)}>
+          <a className={cn(styles.link, className)}>
+            <Image src={image ? image : ''} width={77} height={77} alt="logo" priority />
+          </a>
+        </Link>
+      ) : (
+        <Image src={image ? image : ''} width={77} height={77} alt="logo" priority />
+      )}
     </div>
   );
 };

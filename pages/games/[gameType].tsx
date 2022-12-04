@@ -61,9 +61,10 @@ const PROPOSER_INGAME_ID = 0;
 const ACCEPTER_INGAME_ID = 1;
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const FETCH_OPPONENT_ADDRESS_TIMEOUT = 2500;
+const arbiterContractAddress = 'KT1UhzvTeMbc3jcSCMjvosicfGAhbQBfQDZP';
 
 const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
-  const { userAddress } = useWalletContext();
+  const { userAddress, tezos } = useWalletContext();
 
   const [playerIngameId, setPlayerIngameId] = useState<0 | 1>(0);
   const [isInDispute, setIsInDispute] = useState<boolean>(false);
@@ -155,6 +156,7 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
   };
 
   const runFinishGameHandler = async (nextGameState: IGameState<any, any>) => {
+    console.log('run finish gaem handler');
     if (!nextGameState.lastOpponentMove) {
       throw 'no lastOpponentMove';
     }
@@ -172,6 +174,8 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
       nextGameState.lastOpponentMove.gameMove,
       signatures,
     );
+
+    console.log('finish game signatures', signatures);
 
     const finishedGameResult = await finishGame(getArbiter(), [
       lastOpponentMoveSignedByAll,
@@ -328,6 +332,8 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
     setIsInDispute(true);
 
     const finishedGameResult = await disputeMove(getArbiter(), gameState.lastOpponentMove);
+
+    const contract = await tezos.wallet.at(arbiterContractAddress);
     // sendMessage({
     //   gameId: gameId,
     //   message: finishedGameResult,
@@ -425,6 +431,7 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
       // console.log('signedMove', signedMove);
 
       const isOpponentMove = signedMove.gameMove.player === opponentAddress;
+      console.log(isOpponentMove, signedMove.gameMove.player);
       const checkIsValidMove = async (
         signedMove: ISignedGameMove,
         isOpponentMove: boolean,
@@ -460,13 +467,14 @@ const Game: NextPage<IGamePageProps> = ({ gameType, version }) => {
         isOpponentMove,
       );
 
+      console.log('nextGameState', nextGameState);
+
       setGameState(nextGameState);
       setIsInvalidMove(!isValid);
 
       if (nextGameState.getWinnerId() !== null) {
         setFinishGameCheckResult({ winner: playerIngameId === nextGameState.getWinnerId() });
         if (playerIngameId === nextGameState.getWinnerId()) {
-          // console.log('nextGameState', nextGameState);
           runFinishGameHandler(nextGameState);
         }
       }

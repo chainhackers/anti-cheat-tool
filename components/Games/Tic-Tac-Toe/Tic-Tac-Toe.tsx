@@ -3,11 +3,9 @@ import { Board } from 'components/Games/Tic-Tac-Toe';
 import { ITicTacToeProps } from './ITicTacToeProps';
 
 import styles from './Tic-Tac-Toe.module.scss';
-import {
-  TicTacToeBoard,
-  TTTMove,
-} from './types';
+import { TicTacToeBoard, TTTMove } from './types';
 import { getRulesContract, transition } from 'gameApi';
+import { useWalletContext } from 'contexts/WalltetContext';
 
 export const TicTacToe: React.FC<ITicTacToeProps> = ({
   gameState,
@@ -15,6 +13,7 @@ export const TicTacToe: React.FC<ITicTacToeProps> = ({
   sendSignedMove,
 }) => {
   const boardState = gameState?.currentBoard || TicTacToeBoard.empty();
+  const { userAddress } = useWalletContext();
 
   const clickHandler = async (i: number) => {
     if (!gameState) return;
@@ -22,14 +21,17 @@ export const TicTacToe: React.FC<ITicTacToeProps> = ({
     const move: TTTMove = TTTMove.fromMove(i, gameState.playerType);
 
     let address = await getSignerAddress();
-    let transitionResult = await transition(getRulesContract('tic-tac-toe'),
+    // let address = userAddress!;
+    let transitionResult = await transition(
+      getRulesContract('tic-tac-toe'),
       gameState.toGameStateContractParams(),
       gameState.playerId,
-      move.encodedMove
+      move.encodedMove,
     );
     const signedMove = await gameState.signMove(
-      gameState.composeMove(move, transitionResult, true, address),
-      address);
+      gameState.composeMove(move, transitionResult, true, userAddress!),
+      userAddress!,
+    );
     sendSignedMove(signedMove);
   };
 

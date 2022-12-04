@@ -1,4 +1,4 @@
-export interface NavigationPropsI {
+export interface INavigationProps {
   children?: React.ReactNode;
   active?: 'games' | 'github' | 'team' | string;
 }
